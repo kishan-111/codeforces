@@ -1,1 +1,182 @@
+//A - Print a Pedestal (Codeforces logo?)
 
+#include<bits/stdc++.h>
+using namespace std;
+ 
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int t;
+    cin>>t;
+ 
+    while(t--){
+        int n;
+        cin>>n;
+        
+        switch(n%3){
+            case 0: cout<<n/3<<" "<<n/3+1<<" "<<n/3-1<<endl;
+                    break;
+                    case 1: n=n+2;
+                    cout<<n/3-1<<" "<<n/3+1<<" "<<n/3-2<<endl;
+                    break;
+                    case 2:
+                    n=n+1;
+                    cout<<n/3<<" "<<n/3+1<<" "<<n/3-2<<endl;
+                    break;
+        }
+ 
+    }
+}
+
+//B - Array Decrements
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int t;
+    cin>>t;
+
+    while(t--){
+      int n;
+      cin>>n;
+
+      vector<int> a(n),b(n);
+      for(int i=0;i<n;i++)
+      cin>>a[i];
+
+      for(int i=0;i<n;i++)
+      cin>>b[i];
+
+      int maxdiff=0;
+      for(int i=0;i<n;i++){
+          maxdiff=max(maxdiff,a[i]-b[i]);
+      }
+
+      for(int i=0;i<n;i++){
+          a[i]=max(a[i]-maxdiff,0);
+      }
+      
+      if(a==b)
+      cout<<"YES\n";
+      else
+      cout<<"NO\n";
+    }
+}
+
+//C - Restoring the Duration of Tasks
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int t;
+    cin>>t;
+
+    while(t--){
+        int n;
+        cin>>n;
+        
+        vector<int> s(n),f(n);
+
+        for(int i=0;i<n;i++)
+        cin>>s[i];
+
+        for(int i=0;i<n;i++)
+        cin>>f[i];
+
+        vector<int> ans;
+        ans.push_back(f[0]-s[0]);
+
+        for(int i=1;i<n;i++){
+            int dur=f[i]-max(f[i-1],s[i]);
+            ans.push_back(dur);
+        }
+        
+        for(int i=0;i<n;i++)
+        cout<<ans[i]<<" ";
+        cout<<"\n";
+    }
+}
+
+//D - Black and White Stripe
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int t;
+    cin>>t;
+
+    while(t--){
+        int n,k;
+        string s;
+        cin>>n>>k;
+        cin>>s;
+        
+        int white=0;
+        int minWhite=n;
+        for(int i=0;i<k;i++){
+           if(s[i]=='W')
+           white++;
+        }
+
+        minWhite=min(minWhite,white);
+
+        for(int i=k;i<n;i++){
+            if(s[i-k]=='W'&&s[i]=='B'){
+                white=white-1;
+                minWhite=min(minWhite,white);
+            }
+
+            if(s[i-k]=='B'&&s[i]=='W')
+            white=white+1;
+        }
+        
+        cout<<minWhite<<endl;
+    }
+}
+
+//E - Price Maximization
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int t;
+    cin>>t;
+
+    while(t--){
+       int n,k;
+
+       cin>>n>>k;
+
+       int a[n];
+       for(int i=0;i<n;i++)
+       cin>>a[i];
+       
+       long long int ans=0;
+       for(int i=0;i<n;i++){
+           ans=ans+a[i]/k;
+           a[i]=a[i]%k;
+       }
+
+       sort(a,a+n);
+
+       int x=0,y=n-1;
+       while(x<y){
+           if(a[x]+a[y]>=k){
+               ans=ans+(a[x]+a[y])/k;
+               x++;
+               y--;
+           }else{
+               x++;
+           }
+       }
+       cout<<ans<<endl;
+    }
+}
